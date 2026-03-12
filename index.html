@@ -32,6 +32,7 @@
       color: var(--charcoal);
       background: var(--white);
       overflow-x: hidden;
+      position: relative;
     }
 
     img, svg { display: block; max-width: 100%; }
@@ -124,6 +125,7 @@
       top: 0; left: 0; right: 0;
       height: var(--nav-h);
       z-index: 1000;
+      background: rgba(13,13,13,0.97);
       transition: background var(--transition), box-shadow var(--transition);
     }
 
@@ -201,14 +203,18 @@
     .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { width: 100%; }
 
+    /* ─── HAMBURGER ─────────────────────────────────────────── */
     .hamburger {
       display: none;
       flex-direction: column;
       gap: 5px;
       cursor: pointer;
-      padding: 4px;
+      padding: 10px;
       background: none;
       border: none;
+      -webkit-tap-highlight-color: transparent;
+      z-index: 1100;
+      position: relative;
     }
 
     .hamburger span {
@@ -225,38 +231,57 @@
     .hamburger.open span:nth-child(3) { transform: rotate(-40deg) translateY(1px); }
 
     .mobile-nav {
-      display: none;
-      flex-direction: column;
-      position: fixed;
-      top: var(--nav-h);
-      left: 0; right: 0;
-      background: rgba(13,13,13,0.98);
-      padding: 2rem;
-      gap: 1.5rem;
-      border-top: 1px solid rgba(232,93,0,0.3);
+  display: flex;
+  transform: translateY(-120%);
+  transition: transform 0.35s ease;
+  position: fixed;
+  top: var(--nav-h);
+  left: 0;
+  width: 100%;
+  height: calc(100vh - var(--nav-h));
+  background: #0D0D0D;
+  padding: 2rem;
+  border-top: 2px solid #E85D00;
+  flex-direction: column;
+  overflow-y: auto;
+  z-index: 2000;   /* above nav and hero */
+}
+
+    .mobile-nav.open {
+      transform: translateY(0);
     }
 
-    .mobile-nav.open { display: flex; }
     .mobile-nav a {
-      color: rgba(255,255,255,0.8);
-      font-size: 1.1rem;
-      font-weight: 500;
-      padding: 0.5rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: #ffffff;
+      font-size: 1.4rem;
+      font-weight: 600;
+      padding: 1.2rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: block;
+      width: 100%;
+      letter-spacing: 0.03em;
+      transform: translateZ(0);  /* ← forces GPU layer above everything */
+      -webkit-transform: translateZ(0);
     }
-    .mobile-nav a:hover { color: var(--orange); }
+
+    .mobile-nav a:last-child {
+      border-bottom: none;
+      margin-top: 1rem;
+    }
+
+    .mobile-nav a:hover,
+    .mobile-nav a:active { color: #E85D00; }
 
     /* ─── HERO ──────────────────────────────────────────────── */
     #hero {
-      min-height: 100vh;
-      background: var(--black);
-      position: relative;
-      display: flex;
-      align-items: center;
-      padding-top: var(--nav-h);
-      overflow: hidden;
-    }
-
+  min-height: 100vh;
+  background: var(--black);
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding-top: var(--nav-h);
+  overflow: hidden;  /* ← THIS is the fix */
+}
     #hero::before {
       content: '';
       position: absolute;
@@ -597,6 +622,7 @@
       border: 1px solid rgba(232,93,0,0.3);
     }
 
+    /* Pipeline */
     .pipeline {
       display: flex;
       align-items: center;
@@ -642,7 +668,12 @@
       text-transform: uppercase;
     }
 
-    .pipeline-arrow { color: var(--orange); font-size: 1.2rem; padding: 0 0.5rem; opacity: 0.7; }
+    .pipeline-arrow {
+      color: var(--orange);
+      font-size: 1.2rem;
+      padding: 0 0.5rem;
+      opacity: 0.7;
+    }
 
     /* ─── COMMUNITY ─────────────────────────────────────────── */
     #community { background: var(--white); padding: 7rem 0; }
@@ -681,7 +712,12 @@
       transition: var(--transition);
     }
 
-    .sector-name { font-size: 0.95rem; font-weight: 500; color: var(--mid); transition: color var(--transition); }
+    .sector-name {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--mid);
+      transition: color var(--transition);
+    }
 
     .audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
 
@@ -797,6 +833,7 @@
     }
 
     .form-group select option { background: var(--charcoal); }
+
     .form-group input::placeholder,
     .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
 
@@ -861,7 +898,12 @@
 
     .footer-links { display: flex; gap: 2rem; list-style: none; }
 
-    .footer-links a { font-size: 0.78rem; color: rgba(255,255,255,0.35); transition: color var(--transition); }
+    .footer-links a {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      transition: color var(--transition);
+    }
+
     .footer-links a:hover { color: var(--orange); }
 
     /* ─── RESPONSIVE ────────────────────────────────────────── */
@@ -889,8 +931,15 @@
     }
 
     /* ─── FADE IN ───────────────────────────────────────────── */
-    .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
   </style>
 </head>
 <body>
@@ -933,12 +982,13 @@
     </div>
   </nav>
 
+  <!-- ─── MOBILE NAV — must be OUTSIDE and AFTER <nav> ────────── -->
   <div class="mobile-nav" id="mobileNav">
     <a href="#about">About</a>
     <a href="#services">Services</a>
     <a href="#community">Community</a>
     <a href="#contact">Contact</a>
-    <a href="#contact" class="btn btn-primary" style="text-align:center;">Register Interest</a>
+    <a href="#contact" class="btn btn-primary" style="text-align:center;margin-top:1rem;">Register Interest</a>
   </div>
 
   <!-- ─── HERO ─────────────────────────────────────────────────── -->
@@ -1176,6 +1226,7 @@
           <p class="section-body" style="margin-top:1rem;">
             Whether you're entering the field for the first time or looking to deepen expertise in AI risk, cyber resilience, or technology governance, IDR offers structured pathways aligned to where you are in your career.
           </p>
+
           <div style="margin-top:2.5rem;">
             <p style="font-size:0.72rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);margin-bottom:1rem;">Sectors We Serve</p>
             <div class="community-sectors">
@@ -1228,7 +1279,7 @@
           <div class="contact-info">
             <div class="contact-info-item">
               <div class="contact-info-icon">✉</div>
-              <span>info@instituteofdigitalrisk.ac.uk</span>
+              <span>hello@instituteofdigitalrisk.com</span>
             </div>
             <div class="contact-info-item">
               <div class="contact-info-icon">📍</div>
@@ -1304,26 +1355,34 @@
 
   <!-- ─── JS ───────────────────────────────────────────────────── -->
   <script>
+    // Sticky nav
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 40);
     });
 
+    // Hamburger — click only, no touchend (prevents double-fire on mobile)
     const hamburger = document.getElementById('hamburger');
     const mobileNav = document.getElementById('mobileNav');
 
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('open');
-      mobileNav.classList.toggle('open');
+    hamburger.addEventListener('click', function(e) {
+      e.preventDefault();
+      const isOpen = mobileNav.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      // Lock body scroll when menu is open
+      document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
+    // Close menu when any link is tapped
     mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', function() {
         hamburger.classList.remove('open');
         mobileNav.classList.remove('open');
+        document.body.style.overflow = '';
       });
     });
 
+    // Scroll reveal
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, i) => {
@@ -1336,11 +1395,20 @@
 
     revealEls.forEach(el => observer.observe(el));
 
+    // Form submit
     document.getElementById('contactForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      const fname = document.getElementById('fname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      if (!fname || !email) {
+        alert('Please fill in at least your name and email.');
+        return;
+      }
+      this.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
       const success = document.getElementById('formSuccess');
       success.style.display = 'block';
-      this.querySelectorAll('input, textarea, select, button').forEach(el => el.disabled = true);
+      success.textContent = '✓ Thank you, ' + fname + ' — we\'ll be in touch shortly.';
+      success.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     });
   </script>
 
