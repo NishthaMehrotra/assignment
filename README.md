@@ -1,44 +1,42 @@
-Institute of Digital Risk – Landing Page
+# Institute of Digital Risk — Website
 
-A modern, responsive landing page for the Institute of Digital Risk (IDR).
-The website presents the institute’s mission, services, community, and contact form in a clean and professional layout.
+Single-page marketing site for IDR, a UK-based digital risk training and deployment institute.
 
-Live Demo
+---
 
-Deployed Link: https://nishthamehrotra.github.io/assignment/
+Deployed link: https://nishthamehrotra.github.io/assignment/
 
-Features
+## Stack
+- Pure HTML/CSS/JS — no frameworks, no build step
+- Google Fonts (Cormorant Garamond + DM Sans)
+- Single file: `index.html`
 
-Fully responsive design (desktop, tablet, mobile)
+---
 
-Smooth scrolling navigation
+## Sections
+Hero → About → Services → Community → Contact → Footer
 
-Mobile hamburger menu
+---
 
-Animated section reveal on scroll
+## Responsive
+- `> 1024px` — two-column layouts
+- `≤ 768px` — mobile nav, stacked layouts
 
-Modern hero section with SVG visuals
+---
 
-Contact form with basic validation
+## Form
+Front-end only. To activate, connect to [Formspree](https://formspree.io) or [Netlify Forms](https://www.netlify.com/products/forms/).
 
-Clean and structured layout sections:
+---
 
-Hero
+## Deploy
+Drop `index.html` on Netlify, Vercel, GitHub Pages, or any static host.
 
-About
+---
 
-Services
+## Customise
+All colours are CSS variables in `:root`. Stats, email, and nav links are hardcoded in the HTML.
 
-Community
+---
 
-Contact
-
-Tech Stack
-
-HTML5
-
-CSS3 (Custom styling)
-
-Vanilla JavaScript
-
-No external frameworks were used.
+© 2025 Institute of Digital Risk. All rights reserved.
